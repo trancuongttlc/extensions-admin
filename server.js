@@ -19,12 +19,12 @@ const app    = express();
 const server = require('http').createServer( app);
 
 // if (process.env.NODE_ENV !== 'production') {
-  	// const compiler = webpack(configDev);
-  	// app.use(webpackDevMiddleware(compiler, {
-   //    	publicPath: configDev.output.publicPath,
-   //    	stats: { colors: true },
-  	// }));
-  	// app.use(webpackHotMiddleware(compiler));
+  	const compiler = webpack(configDev);
+  	app.use(webpackDevMiddleware(compiler, {
+      	publicPath: configDev.output.publicPath,
+      	stats: { colors: true },
+  	}));
+  	app.use(webpackHotMiddleware(compiler));
 // }
 
 app.use(bodyParser.urlencoded({ extended: false }))

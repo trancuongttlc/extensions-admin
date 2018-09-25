@@ -80,7 +80,8 @@ class ExtensionsController {
 
 	async register(req, res) {
 		try {
-			let {email, password} = req.params;
+			let {email, password} = req.body;
+			let saltRounds = 10;
 			let validEmail = await Users.find({email});
 
 			if (!validEmail) {
@@ -89,7 +90,7 @@ class ExtensionsController {
 			}
 
 			let bcryptPassword = await new Promise((resolve, reject) => {
-			    bcrypt.genSalt(password, function(err, hash) {
+			    bcrypt.hash(password, saltRounds,  function(err, hash) {
 			      	if (err) reject(err)
 			      	resolve(hash)
 			    });
@@ -106,20 +107,28 @@ class ExtensionsController {
 		let {email, password} = req.body;
 		try {
 			let info = await Users.findOne({email});
-			// let oldPass = info[0].password;
-			return;
 			if (!info) {
 				res.json({status: false, data: [], messge: "Your email or password wrong !"});
 				return;
 			}
-			if (!bcrypt.compareSync(password, oldPass)) {
+			if (!bcrypt.compareSync(password, info.password)) {
 				res.json({status: false, data: [], messge: "Your password or email wrong !"});
 				return;
 			}
-			let token = jwt.sign(info, 'readnews', {
+			let token = jwt.sign(info.toJSON(), 'readnews', {
 				expiresIn: '30 days'
 			});
 			res.json({status: false, data: {auth: info, token: token}, messge: "Your password or email wrong !"});
+		} catch(e) {
+			res.json({status: false, data: [], messge: 'Error '+ e.message});
+		}
+	}
+
+
+	async showUsers(req, res) {
+		try {
+			let result = await Users.find();
+			res.json({status: false, data: result, messge: "success"});
 		} catch(e) {
 			res.json({status: false, data: [], messge: 'Error '+ e.message});
 		}

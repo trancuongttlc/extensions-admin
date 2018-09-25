@@ -17,9 +17,9 @@ let upload = multer({ storage: storage });
 const router   = Router();
 
 router
-
 	.get('/detailPage/:_id', ctrl_extensions.detailPage)
 	.get('/showAllFile', ctrl_extensions.showAllFile)
+	.get('/showUsers', ctrl_extensions.showUsers)
 	.post('/register', ctrl_extensions.register)
 	.post('/login', ctrl_extensions.login)
 	.post('/uploadFile', upload.single('file'), ctrl_extensions.uploadFile)
