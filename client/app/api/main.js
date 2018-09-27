@@ -8,7 +8,6 @@ export function showAll(params = {}) {
     });
 }
 
-
 export function removeId(_id) {
     return request({
         method: 'DELETE',
@@ -20,5 +19,13 @@ export function getId(_id) {
     return request({
         method: 'GET',
         url: `api/detailPage/${_id}`
+    });
+}
+
+export function register(data) {
+    return request({
+        method: 'POST',
+        url: `api/register`,
+        data
     });
 }

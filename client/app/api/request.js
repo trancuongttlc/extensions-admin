@@ -5,13 +5,13 @@ let debug;
 
 let headers = {};
 
-let baseURL;
+let baseURL = "http://localhost:3000/";
 
-if (process.env.NODE_ENV === 'localhost') {
-    baseURL = 'http://localhost:3000/';
-}else if (process.env.NODE_ENV === 'production') {
-    baseURL = 'http://exam.ceosoftware.vn:3000/'
-}
+// if (process.env.NODE_ENV === 'localhost') {
+//     baseURL = 'http://localhost:3000/';
+// }else if (process.env.NODE_ENV === 'production') {
+//     baseURL = 'http://exam.ceosoftware.vn:3000/'
+// }
 
 
 export default function (options) {
