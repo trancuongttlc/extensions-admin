@@ -97,7 +97,7 @@ class ExtensionsController {
 			})
 
 			let result = await Users.create({"email": email, "password": bcryptPassword});
-			res.json({status: false, data: result, messge: "Register success"});
+			res.json({status: true, data: result, messge: "Register success"});
 		} catch(e) {
 			res.json({status: false, data: [], messge: 'Error '+ e.message});
 		}
@@ -118,7 +118,7 @@ class ExtensionsController {
 			let token = jwt.sign(info.toJSON(), 'readnews', {
 				expiresIn: '30 days'
 			});
-			res.json({status: false, data: {auth: info, token: token}, messge: "Your password or email wrong !"});
+			res.json({status: true, data: {auth: info, token: token}, messge: "Login success !"});
 		} catch(e) {
 			res.json({status: false, data: [], messge: 'Error '+ e.message});
 		}

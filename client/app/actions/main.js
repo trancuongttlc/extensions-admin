@@ -12,3 +12,21 @@ export function getListFile() {
         });
     };
 }
+
+export function login(data) {
+    return (dispatch) => {
+        api.login(data).then((result) => {
+            localStorage.set('viewer', result);
+            dispatch({
+                type: ActionTypes.USER_LOGIN_SUCCESS,
+                viewer: result
+            });
+        }).catch(error => {
+            dispatch({
+                type: ActionTypes.USER_LOGIN_FAILED,
+                error
+            });
+            signal.trigger(EVENT.USER_LOGIN_FAILED, error);
+        });
+    };
+}

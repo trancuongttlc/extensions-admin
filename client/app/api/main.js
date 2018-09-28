@@ -29,3 +29,11 @@ export function register(data) {
         data
     });
 }
+
+export function login(data) {
+    return request({
+        method: 'POST',
+        url: `api/login`,
+        data
+    });
+}

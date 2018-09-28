@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import autobind from 'autobind-decorator';
 import { Link } from 'react-router-dom';
+import Alert from 'react-s-alert';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+
 
 import * as api from '../../api';
 
@@ -8,22 +11,16 @@ class Register extends Component {
 
     state = {
         errorEmail: null,
-        errorPass: null,
-        checkPass: null
+        errorPass: null
     }
 
     @autobind
     validatePassword() {
         let password = this.passwordInput.value;
-        if (!password || password.length < 5) {
-            this.setState({
-                errorPass: "Password must be valid"
-            });
-            return;
+        if (password.length < 5) {
+            return false;
         }
-        this.setState({
-            errorPass: null
-        });
+        return true;
     }
 
     validateEmailType(email) {
@@ -36,52 +33,43 @@ class Register extends Component {
         let email  = this.emailInput.value;
         let vEmail = this.validateEmailType(email);
         if (!vEmail) {
-            this.setState({
-                errorEmail: "Email must be valid"
-            });
-            return;
+            return false;
         }
-        this.setState({
-            errorEmail: null
-        });
-    }
-
-
-    // Popup hiển thị thông báo
-    renderPopup() {
-        return(
-            <div className="ui-pnotify bg-success border-success ui-pnotify-fade-normal ui-pnotify-mobile-able ui-pnotify-move ui-pnotify-in ui-pnotify-fade-in" aria-live="assertive" aria-role="alertdialog" style="display: none; width: 300px; right: 20px; top: 20px;">
-                <div className="brighttheme ui-pnotify-container brighttheme-notice ui-pnotify-shadow" role="alert" style="min-height: 16px;">
-                    <div className="ui-pnotify-closer" aria-role="button" tabindex="0" title="Gần" style="cursor: pointer; visibility: hidden;"><span className="brighttheme-icon-closer"></span></div>
-                    <div className="ui-pnotify-sticker" aria-role="button" aria-pressed="false" tabindex="0" title="Gậy" style="cursor: pointer; visibility: hidden;"><span className="brighttheme-icon-sticker" aria-pressed="false"></span></div>
-                    <div className="ui-pnotify-icon"><span className="brighttheme-icon-notice"></span></div>
-                    <h4 className="ui-pnotify-title">
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">Thông báo thành công</font>
-                        </font>
-                    </h4>
-                    <div className="ui-pnotify-text" aria-role="alert">
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">Kiểm tra tôi! </font>
-                            <font style="vertical-align: inherit;">Tôi là một thông báo.</font>
-                        </font>
-                    </div>
-                    <div className="ui-pnotify-action-bar" style="margin-top: 5px; clear: both; text-align: right; display: none;"></div>
-                </div>
-            </div>
-        )
+        return true;
     }
 
     @autobind
     handleRegister(e) {
-        e.preventDefault()
-        let email    = this.emailInput.value;
-        let password = this.passwordInput.value;
+        e.preventDefault();
+        let email     = this.emailInput.value;
+        let password  = this.passwordInput.value;
+        let vPassword = this.validatePassword();
+        let vEmail    = this.validateEmail();
+        if (!vEmail) {
+            this.setState({
+                errorEmail: "Email không hợp lệ."
+            });
+            return;
+        }
+        if (!vPassword) {
+            this.setState({
+                errorPass: "Mật khẩu phải lớn hơn 5 kí tự"
+            });
+            return;
+        }
+        this.setState({
+            errorEmail: null,
+            errorPass : null
+        });
 
         api.register({email, password}).then(result => {
-            console.log(result)
+            let {status, message} = result;
+            if (status) {
+                alert("Đăng ký thành công");
+                return;
+            }
+            alert("Có lỗi xảy ra, xin vui lòng thử lại");
         })
-
     }
 
 
@@ -92,7 +80,6 @@ class Register extends Component {
                 data-component="Login"
                 className="navbar-top login-container pace-done app-login"
             >
-                {this.renderPopup}
                 <div className="page-container">
                     <div className="page-content">
                         <div className="content-wrapper">
@@ -108,7 +95,7 @@ class Register extends Component {
 
                                     <div className="form-group has-feedback ">
                                         <input 
-                                            type="email" onBlur={this.validateEmail} className="form-control" placeholder="Email đăng nhập"
+                                            type="email" className="form-control" placeholder="Email đăng nhập"
                                             ref={(input) => { this.emailInput = input;}}
                                         />
                                         <div className="form-control-feedback">
@@ -121,7 +108,7 @@ class Register extends Component {
 
                                     <div className="form-group has-feedback ">
                                         <input 
-                                            type="password" onBlur={this.validatePassword} className="form-control" placeholder="Password"
+                                            type="password" className="form-control" placeholder="Password" autocomplete="password"
                                             ref={(input) => { this.passwordInput = input;}}
                                         />
                                         <div className="form-control-feedback">
@@ -134,7 +121,7 @@ class Register extends Component {
 
                                     <div className="form-group">
                                         <button 
-                                            className="btn bg-pink-400 btn-block"
+                                            className="btn bg-pink-400 btn-block bg-warning"
                                             onClick={this.handleRegister}
                                         >
                                             Đăng ký

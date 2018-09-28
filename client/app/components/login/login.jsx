@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import autobind from 'autobind-decorator';
 import { Link } from 'react-router-dom';
+import * as api from '../../api';
 import './style.css';
 
 class Login extends Component {
 
-
-    _onLogin() {
+    handleLogin() {
+        let email     = this.emailInput.value;
+        let password  = this.passwordInput.value;
 
     }
 
@@ -31,7 +33,8 @@ class Login extends Component {
 
                                     <div className="form-group has-feedback ">
                                         <input 
-                                            type="text" className="form-control" placeholder="Tên đăng nhập"
+                                            type="text" className="form-control" placeholder="Email đăng nhập"
+                                            ref={(input) => { this.emailInput = input;}}
                                         />
                                         <div className="form-control-feedback">
                                             <i className="icon-user text-muted"></i>
@@ -39,21 +42,21 @@ class Login extends Component {
                                     </div>
                                     <div className="form-group has-feedback ">
                                         <input 
-                                            type="password" className="form-control" placeholder="Password"
+                                            type="password" className="form-control" placeholder="Mật khẩu"
+                                            ref={(input) => { this.passwordInput = input;}}
                                         />
                                         <div className="form-control-feedback">
                                             <i className="icon-lock5 text-muted"></i>
                                         </div>
                                     </div>
                                     <div className="form-group">
-                                        <Link to="list">
                                             <button 
                                                 className="btn bg-pink-400 btn-block"
+                                                onClick={this.handleLogin}
                                             >
                                                 Đăng nhập
                                                 <i className="icon-circle-right2 position-right"></i>
                                             </button>
-                                        </Link>
                                     </div>
                                     <Link to="register">
                                         <p className="text-center"><a>Đăng ký tài khoản!</a></p>
