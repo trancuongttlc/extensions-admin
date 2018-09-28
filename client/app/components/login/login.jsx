@@ -6,10 +6,13 @@ import './style.css';
 
 class Login extends Component {
 
+    componentDidMount() {
+        console.log(this.props)
+    }
+
     handleLogin() {
         let email     = this.emailInput.value;
         let password  = this.passwordInput.value;
-
     }
 
     render() {
@@ -70,5 +73,6 @@ class Login extends Component {
         );
     }
 }
+
 
 export default Login

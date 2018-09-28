@@ -30,10 +30,31 @@ export function register(data) {
     });
 }
 
-export function login(data) {
-    return request({
-        method: 'POST',
-        url: `api/login`,
-        data
-    });
+export function login({username, password} = {}) {
+    return Promise.resolve().then(() => {
+        let message;
+        if (!username && !password) {
+            message = 'Thiếu tên đăng nhập và mật khẩu';
+        } else if (!username) {
+            message = 'Thiếu tên đăng nhập';
+        } else if (!password) {
+            message = 'Thiếu mật khẩu';
+        } else {
+            return;
+        }
+
+        return Promise.reject({
+            code: -1,
+            message
+        });
+    }).then(() => {
+        return request({
+            method: 'POST',
+            url:'/v1.0/api/login',
+            data: {
+                username,
+                password
+            }
+        });
+    });  
 }
