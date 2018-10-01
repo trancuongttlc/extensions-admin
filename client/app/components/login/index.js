@@ -2,22 +2,8 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Login from './Login';
+import Login from './login.jsx';
 import {login} from '../../actions';
-console.log(login)
-
-const mapStateToProps = (state) => {
-
-    const {
-        skin
-    } = state;
-
-    let {windowHeight} = skin;
-
-    return {
-        windowHeight
-    };
-};
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -25,4 +11,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withRouter(connect(mapDispatchToProps)(Login));

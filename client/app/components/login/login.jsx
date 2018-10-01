@@ -6,13 +6,16 @@ import './style.css';
 
 class Login extends Component {
 
-    componentDidMount() {
-        console.log(this.props)
-    }
+    _handleLogin(e) {
+        e.preventDefault();
+        let {login} = this.props;
+        let email    = this.emailInput.value;
+        let password = this.passwordInput.value;
 
-    handleLogin() {
-        let email     = this.emailInput.value;
-        let password  = this.passwordInput.value;
+        login({
+            email,
+            password
+        })
     }
 
     render() {
@@ -24,7 +27,7 @@ class Login extends Component {
                 <div className="page-container">
                     <div className="page-content">
                         <div className="content-wrapper">
-                            <form 
+                            <div 
                                 className="login-form"
                             >
                                 <div className="panel panel-body">
@@ -55,7 +58,7 @@ class Login extends Component {
                                     <div className="form-group">
                                             <button 
                                                 className="btn bg-pink-400 btn-block"
-                                                onClick={this.handleLogin}
+                                                onClick={this._handleLogin}
                                             >
                                                 Đăng nhập
                                                 <i className="icon-circle-right2 position-right"></i>
@@ -65,7 +68,7 @@ class Login extends Component {
                                         <p className="text-center"><a>Đăng ký tài khoản!</a></p>
                                     </Link>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -75,4 +78,4 @@ class Login extends Component {
 }
 
 
-export default Login
+export default Login;

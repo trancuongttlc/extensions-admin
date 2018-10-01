@@ -50,7 +50,7 @@ export function login({username, password} = {}) {
     }).then(() => {
         return request({
             method: 'POST',
-            url:'/v1.0/api/login',
+            url:'api/login',
             data: {
                 username,
                 password
