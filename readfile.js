@@ -1,9 +1,7 @@
 import express      		from 'express';
 import path         		from 'path';
-
-var fs = require('fs');
-
-var find = require('find');
+import fs                   from 'fs';
+import find                 from 'find';
 
 const PORT   = process.env.PORT || 4000;
 const app    = express();
@@ -38,5 +36,5 @@ function fromDir(startPath,filter,callback){
 
 server.listen(PORT, function(err, connect) {
     if(err) throw err;
-    console.log('App listening to http://localhost:'+PORT+'...');
+    console.log('App listening to '+PORT+'...');
 });

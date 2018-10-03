@@ -6,6 +6,7 @@ import './style.css';
 
 class Login extends Component {
 
+    @autobind
     _handleLogin(e) {
         e.preventDefault();
         let {login} = this.props;
@@ -13,8 +14,8 @@ class Login extends Component {
         let password = this.passwordInput.value;
 
         login({
-            email,
-            password
+            email: "email",
+            password:"password"
         })
     }
 
