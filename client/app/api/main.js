@@ -30,12 +30,12 @@ export function register(data) {
     });
 }
 
-export function login({username, password} = {}) {
+export function login({email, password} = {}) {
     return Promise.resolve().then(() => {
         let message;
-        if (!username && !password) {
+        if (!email && !password) {
             message = 'Thiếu tên đăng nhập và mật khẩu';
-        } else if (!username) {
+        } else if (!email) {
             message = 'Thiếu tên đăng nhập';
         } else if (!password) {
             message = 'Thiếu mật khẩu';
@@ -52,7 +52,7 @@ export function login({username, password} = {}) {
             method: 'POST',
             url:'api/login',
             data: {
-                username,
+                email,
                 password
             }
         });

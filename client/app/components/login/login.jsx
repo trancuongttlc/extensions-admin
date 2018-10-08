@@ -12,7 +12,6 @@ class Login extends Component {
         let {login} = this.props;
         let email    = this.emailInput.value;
         let password = this.passwordInput.value;
-
         login({
             email,
             password
