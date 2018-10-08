@@ -7,10 +7,24 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const APP_DIR   = path.resolve(__dirname, 'client/app');
 
 module.exports = {
-    entry: './client/app/index.js',
+    mode: 'development',
+    entry: {
+        c: './client/app',
+        r: ['react', 'react-router', 'react-dom'],
+        l: ['store', 'underscore']
+    },
     output: {
-        path: path.join(__dirname, '/dist'),
-        filename: 'bundle.js'
+        path: __dirname + '/build',
+        filename: '[name].[hash].js',
+        chunkFilename: '[name].[hash].js'
+    },
+    resolve: {
+        extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
+        alias: {
+            actions: path.resolve('./client/app/actions'),
+            api: path.resolve('./client/app/api'),
+            components: path.resolve('./client/app/components'),
+        }
     },
     module: {
         rules: [

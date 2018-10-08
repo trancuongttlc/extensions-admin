@@ -14,8 +14,8 @@ class Login extends Component {
         let password = this.passwordInput.value;
 
         login({
-            email: "email",
-            password:"password"
+            email,
+            password
         })
     }
 
@@ -66,7 +66,7 @@ class Login extends Component {
                                             </button>
                                     </div>
                                     <Link to="register">
-                                        <p className="text-center"><a>Đăng ký tài khoản!</a></p>
+                                        <p className="text-center">Đăng ký tài khoản!</p>
                                     </Link>
                                 </div>
                             </div>
